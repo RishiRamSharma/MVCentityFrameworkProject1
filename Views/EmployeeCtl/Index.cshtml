@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MVCentityFrameworkNewProject.Models.Employee>
+
+
+<h2 class="text-center text-primary">Employee Data </h2>
+@Html.ActionLink("Add New Employee", "Upsert", "EmployeeCtl", new { @class = "btn btn-success" })
+<hr />
+@if (!Model.Any())
+{
+    <h3 class="text-danger">No record found!</h3>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Salary</th>
+                <th>Departments</th>
+                <th>Designation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in Model)
+            {
+                using (Html.BeginForm("Delete", "EmployeeCtl", new { id = emp.Id }))
+                {
+                    <tr>
+                        <td> @emp.Name </td>
+                        <td> @emp.Address </td>
+                        <td> @emp.Salary </td>
+                        <td> @emp.Department.Name </td>
+                        <td> @emp.Designation.Name </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Upsert", "EmployeeCtl", new { id = emp.Id }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Details", "Details", "EmployeeCtl", new { id = emp.Id }, new { @class = "btn btn-primary" })
+                            <input type = "submit" value = "Delete" class="btn btn-danger" onclick="return confirm('Want to Delete?')" />
+                        </td>
+                    </tr>
+                }
+
+            }
+
+        </tbody>
+    </table>
+}

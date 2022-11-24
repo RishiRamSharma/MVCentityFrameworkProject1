@@ -1,0 +1,54 @@
+﻿@model MVCentityFrameworkNewProject.Models.Employee
+@using MVCentityFrameworkNewProject.Models
+@{
+    ViewBag.Title = "Upsert";
+    var title = Model.Id != 0 ? "Edit Employee Details" : "Add New Employee";
+}
+
+<h2 class="text-primary text-center">@title</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text text-danger" })
+    <div class="row">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address)
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Salary)
+            @Html.TextBoxFor(m => m.Salary, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Salary, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.DepartmentId)
+            @Html.DropDownListFor(m => m.DepartmentId, new SelectList(ViewData["depList"] as List<Department>, "Id", "Name"), "Select Your Department", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.DepartmentId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DesignationId)
+            @*@Html.DropDownListFor(m => m.DesignationId, new SelectList(ViewData["desList"] as List<Designation>, "Id", "Name"), "Select Your Designation", new { @class = "form-control" })*@
+            @Html.DropDownListFor(m=>m.DesignationId,new SelectList(ViewBag.desList,"Id","Name"),"Select Your Designation", new {@class="form-control"})
+            @Html.ValidationMessageFor(m => m.DesignationId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">
+                @(Model.Id != 0 ? "Update" : "Save")
+            </button>
+        </div>
+    </div>
+}
+@Html.ActionLink("Back to List!", "Index")
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,30 @@
+﻿@model MVCentityFrameworkNewProject.Models.Employee
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="text-primary text-center">Details of Employee</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Salary</th>
+            <th>Department</th>
+            <th>Designation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Name</td>
+            <td>@Model.Address</td>
+            <td>@Model.Salary</td>
+            <td>@Model.Department.Name</td>
+            <td>@Model.Designation.Name</td>
+        </tr>
+    </tbody>
+</table>
+@Html.ActionLink("Back to List!","Index") 
+<br />
+@Html.ActionLink("Edit", "Upsert", new {id=Model.Id})
+
